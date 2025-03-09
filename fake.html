@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .fake {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .real {
+            background: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fake News Detection</h1>
+        <input type="text" id="news-source" placeholder="Enter news source URL">
+        <textarea id="news-content" rows="4" placeholder="Enter news article or headline"></textarea>
+        <button onclick="detectFakeNews()">Check News</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const fakeNewsSources = [
+            "fakenews.com",
+            "notrealnews.net",
+            "hoax-news.org"
+        ];
+
+        function detectFakeNews() {
+            const source = document.getElementById("news-source").value;
+            const content = document.getElementById("news-content").value;
+            const resultDiv = document.getElementById("result");
+
+            if (!source || !content) {
+                resultDiv.textContent = "Please enter both the news source and content.";
+                resultDiv.className = "result";
+                return;
+            }
+
+            const isFakeSource = fakeNewsSources.some(fakeSource => source.includes(fakeSource));
+
+            if (isFakeSource) {
+                resultDiv.textContent = "This news is likely fake based on the source.";
+                resultDiv.className = "result fake";
+            } else {
+                resultDiv.textContent = "The news source is not in our fake news list, but this does not guarantee its authenticity.";
+                resultDiv.className = "result real";
+            }
+        }
+    </script>
+</body>
+</html>
